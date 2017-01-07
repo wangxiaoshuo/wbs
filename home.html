@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/fonts/font-awesome.min.css" />
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style>
+        *{margin:0;padding:0}
+        .all{
+            position: relative;
+        }
+        li{list-style: none;}
+        a,a:hover{text-decoration: none}
+        nav{width:100%;height:48px;background: black;position: fixed;left:0;top:0;opacity: 0.7;z-index: 99;overflow: hidden}
+        nav .row{line-height: 48px;}
+        .logo{;height:50px;float:left;}
+
+       .menu li:not(:first-child) {float:left;padding-left:14px;color:#fff;}
+       .menu li:first-child {display: block;height: 48px;float:left;line-height: 48px;color:#fff}
+        .menu li a:hover{color:red}
+
+        .search-body{width:185px;height:29px;border:1px solid #ccc;border-radius: 25px;outline: none;padding-left:20px;}
+        .search{position:relative;float:left;}
+        .search button{background:url(img/icons.png)-662px -727px;width:20px;height:20px;position: absolute;top:14px;right:60px;border:none;}
+        .search button:hover{background:url(img/icons.png)-727px -727px;}
+        .login{float:right;}
+        .login a{color:#ccc}
+        .login a:hover{color:red}
+        /* 图片轮播*/
+        .auto-play{width:100%;height:450px;overflow: hidden;background-color: #0f0f0f}
+        .auto-play .auto-img .pic a img{display:block;width:100%;height:450px;float:left;}
+        .auto-play .auto-img .pic a:not(:first-child){display:none}
+        .auto-play .auto-img{width:100%;height:450px;}
+        .auto-pre{display: block;width:72px;height:72px;position: absolute;top:250px;left:50px;background:url(img/ico_sliding_910.png);z-index:10}
+        .auto-next{display: block;width:72px;height:72px;position: absolute;top:250px;right:50px;background:url(img/ico_sliding_910.png)0 -70px;z-index: 10;}
+        .auto-pre:hover{background:url(img/ico_sliding_910.png)0 -145px;}
+        .auto-next:hover{background:url(img/ico_sliding_910.png)0 -214px;}
+        .auto-img .auto-footer{position: absolute;top:400px;width:100%;height:50px;background:#ccc;opacity: 0.8;}
+
+        .auto-footer ul li{background:url(img/icons.png)-855px -790px no-repeat;width:18px;height:18px;margin:15px 5px;}
+        .auto-img ul li{float:left;font-size:25px;cursor: pointer}
+        .auto-img ul li:hover{background-color:red;}
+        .auto-img ul li.on{background:url(img/icons.png)-855px -727px;}
+
+                            /* 电影*/
+
+        .ifo{font-family: "微软雅黑","宋体",Arial,Helvetica,sans-serif;
+           font-size:20px;}
+        .hot-movie-ifo ul li{position:relative;float:left;margin:10px 0px 10px 10px;display: block;width:159px;height:240px;font-size: 12px;color:#222;text-align: center;overflow: hidden}
+
+        .hot-movie-ifo ul li .text{display:block;width:159px;height:40px;line-height: 40px;overflow: hidden; text-overflow: ellipsis;white-space: nowrap;}
+        .hot-movie-ifo ul li .img-ani{width:158px;height:200px;overflow: hidden;position: relative}
+        .hot-movie-ifo ul li .img-ani .shade{width:100%;height:30px;background-color: #000000;opacity:0.45;position:absolute;top:170px;line-height: 30px;text-align:center;color:#f9f9f9}
+        .hot-movie-ifo ul li a img{display:block;width:158px;height:200px;border-radius: 5px;box-shadow:0 0 5px lightgreen;opacity: 1;}
+
+        .hot-movie-ifo ul li .img-ani:hover a img{position:absolute;top:-25px;left:-25px;width:200px;height:250px;}
+        .text a:hover img{opacity:0.6; transition: opacity 0.35s,transform 0.35s}
+        .hot-movie-sort{
+            border-left:1px lawngreen dashed;
+            width:292px;
+            height:520px;
+            background: yellow;
+        }
+        .hot-movie-sort ul li:not(:first-child){margin-top:10px;position: relative;width:100%;height:18px;}
+        .number{width:18px;height:18px;background:rgb(242, 93, 142);color:rgb(255, 255, 255);position:absolute;text-align: center;line-height: 18px;left:-10px;}
+        .hot-detail{width:125px;height:170px;line-height:19px;position:absolute;left:145px;padding:10px;font-size: small;overflow:hidden;text-overflow:ellipsis;display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;}
+        .hot-movie-sort ul li .a{display:block;position:absolute;left:14px;}
+        .hot-movie-sort ul li .detail-right{float:right;color:#ccc;}
+        .hot-movie-sort ul li .detail-right img{display:block;width:18px;height:18px;float:left}
+
+                           /*搞笑*/
+
+        .hot-fun-ifo ul li{position:relative;float:left;margin:10px 12px 0px 12px;display: block;width:187px;height:175px;font-size: 12px;color:#222;}
+        .hot-fun-ifo ul li a:hover{color:#e73c31}
+        .hot-fun-ifo ul li a img{display:block;width:184px;height:120px;border-radius: 5px;box-shadow:0 0 5px lightgreen}
+        .hot-fun-ifo ul li .user-ifo{width:100%;height:20px;line-height:20px;position:absolute;top:120px;color:#fff;}
+        .hot-fun-ifo ul li .user-ifo .useri img{width:30px; height:30px;border-radius:15px;position:absolute;top:-14px;}
+        .hot-fun-ifo ul li .user-ifo .t{position:absolute;left:50px;font:12px/1.5 hiragino sans gb,microsoft yahei,simsun}
+        .hot-fun-ifo ul li .text{display:block;margin-top:25px;font-size:13px}
+
+    </style>
+</head>
+<body>
+
+          <nav class="container-fluid">
+              <div class="row">
+                  <div class="logo col-md-2 col-sm-2">
+                  </div>
+                  <ul class="menu col-md-4 col-sm-4 ">
+                      <li class="menu-home"><a href=""><em style="background:url(img/icons.png)-85px -468px;display:block;width:25px;height:25px;float:left;margin-top:12px;"></em><span>首页</span></a></li>
+                      <li class="menu-movie"><a href=""><span>电影</span><b></b></a></li>
+                      <li class="menu-dianshiju"><a href=""><span>电视剧</span><b></b></a></li>
+                      <li class="menu-dongman"><a href=""><span>动漫</span><b></b></a></li>
+                      <li class="menu-zhibo"><a href=""><span>直播</span><b></b></a></li>
+                      <li class="menu-mv"><a href=""><span>MV</span><b></b></a></li>
+                      <li class="menu-news"><a href=""><span>电影资讯</span><b></b></a></li>
+                  </ul>
+                  <div class="login col-md-2 col-sm-2">
+                      <a href="" class="loginIn">登录</a>
+                      <a href="" class="loginUp">注册</a>
+                  </div>
+                  <div class="search col-md-4 col-sm-4" style="width:250px;">
+
+                      <input class="search-body" type="text" name="keyword" data-url="" placeholder="搜索">
+
+                      <button class="submit"></button>
+                  </div>
+
+              </div>
+
+          </nav>
+
+      <div class="auto-play container-fluid">
+          <div class="row">
+              <div class="auto-img">
+                  <a  href="#" class="auto-pre" ></a>
+                  <a href="#" class="auto-next" ></a>
+                  <div class="pic">
+                      <a href="#" class="aimg-1" ><img src="img/1.jpg"  alt="青云志"></a>
+                      <a href="#" class="aimg-2"><img src="img/2.jpg"  alt="极限挑战"></a>
+                      <a href="#" class="aimg-3"><img src="img/3.jpg"  alt="心理罪2"></a>
+                      <a href="#" class="aimg-4"><img src="img/4.jpg"  alt="闺蜜嫁到"></a>
+                      <a href="#" class="aimg-5"><img src="img/5.jpg"  alt="法医秦明"></a>
+                      <a href="#" class="aimg-6"><img src="img/6.jpg"  alt="模特秀"></a>
+                  </div>
+                  <div class="auto-footer">
+                      <div class="row">
+                          <div class="ifo col-md-4 col-sm-4 col-xs-4" style="height:50px;line-height: 50px;text-align: center;float:left;">
+                          </div>
+                          <ul class="col-md-7 col-sm-7 col-xs-7 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                              <li class="on"></li>
+                              <li></li>
+                              <li></li>
+                              <li></li>
+                              <li></li>
+                              <li></li>
+                          </ul>
+                      </div>
+
+                  </div>
+
+              </div>
+          </div>
+
+      </div>
+      <div class="container" style="background-color: #ccc;">
+          <!-电影->
+        <div class="row hot-movies">
+          <div class="movie-nav col-md-12" style="font-size:20px;color:#fff;background:darkred;">
+        电影
+          </div>
+         <div class="col-md-9 col-sm-9 hot-movie-ifo" style="background:#ffffff">
+             <ul>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="追击者"><img src="img/zhuijizhe.jpg" alt="追击者">
+                         </a>
+                         <div class="shade">追击者</div>
+                     </div>
+
+                     <span class="text">
+                          <a href="" title="追击者"><strong>追击者</strong></a>
+                     </span>
+
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="杀人回忆"><img src="img/sharenhuiyi.jpg" alt="杀人回忆">
+                         </a>
+                         <div class="shade">杀人回忆</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>杀人回忆</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="绝密跟踪"><img src="img/juemigenzhong.png" alt="绝密跟踪">
+                         </a>
+                         <div class="shade">绝密跟踪</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>绝密追踪</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="宇宙快递"><img src="img/yuzhoukuaidi.jpg" alt="宇宙快递">
+                         </a>
+                         <div class="shade">宇宙快递</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>宇宙快递</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="辩护人"><img src="img/bianhuren.jpg" alt="辩护人">
+                         </a>
+                         <div class="shade">辩护人</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>辩护人</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="我是凶手"><img src="img/woshikiller.jpg" alt="我是凶手">
+                         </a>
+                         <div class="shade">我是凶手</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>我是凶手</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="吞噬怪物的孩子"><img src="img/guanwu.jpg" alt="吞噬怪物的孩子">
+                         </a>
+                         <div class="shade">吞噬怪物的孩子</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>吞噬怪物的孩子</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="死亡笔记"><img src="img/deathNote.jpg" alt="死亡笔记">
+                         </a>
+                         <div class="shade">死亡笔记</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>死亡笔记</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="新世界"><img src="img/newworld.jpg" alt="新世界">
+                         </a>
+                         <div class="shade">新世界</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>新世界</strong></a>
+                     </span>
+                 </li>
+                 <li>
+                     <div class="img-ani">
+                         <a href="" title="长城"><img src="img/changcheng.jpg" alt="长城">
+                         </a>
+                         <div class="shade">长城</div>
+                     </div>
+                     <span class="text">
+                          <a href=""><strong>长城</strong></a>
+                     </span>
+                 </li>
+             </ul>
+         </div>
+         <div class="col-md-3 col-sm-3 hot-movie-sort">
+             <p class="hot-movie-right" style="font-size: large;font-family: '微软雅黑', '宋体', Arial, Helvetica, sans-serif;text-align: center;width: 260px;height:50px;line-height: 50px;border-bottom: 1px #f0ad4e solid"><a href="">热门电影</a></p>
+             <ul>
+                 <li >
+                     <div style="position:relative;width:100%;height:170px;">
+                         <div class="number">1</div>
+                         <a href="" class="a"><img src="img/zhuijizhe.jpg" alt="" style="width:100%;height:170px;"></a>
+                         <div class="hot-detail" style="">
+                             <p>导演：王小硕</p>
+                             <p>主演：王小硕</p>
+                             <p>年份：1994</p>
+                             <p>影片简介：在一个久远的年代，一个从天而降的传说预言之子，究竟能在风暴大陆上。。。。。</p>
+                         </div>
+                     </div>
+
+                 </li>
+                 <li>
+                         <div class="number">2</div>
+                         <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                     <div class="detail-right">
+                         <img src="img/hot.gif" alt="">
+                         <small>992</small>
+                     </div>
+
+                 </li>
+                 <li>
+                         <div class="number">3</div>
+                         <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                     <div class="detail-right">
+                         <img src="img/hot.gif" alt="">
+                         <small>555</small>
+                     </div>
+                 </li>
+                 <li>
+                     <div class="number">4</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+                 <li>
+                     <div class="number">5</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+                 <li>
+                     <div class="number">6</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+                 <li>
+                     <div class="number">7</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+                 <li>
+                     <div class="number">8</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+                 <li>
+                     <div class="number">9</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+                 <li>
+                     <div class="number">10</div>
+                     <a href="" class="a">【犯罪/恐怖】杀人回忆 1994</a>
+                 </li>
+
+             </ul>
+         </div>
+</div>
+          <!-搞笑视频->
+          <div class="row hot-movies">
+              <div class="movie-nav col-md-12" style="font-size:20px;color:#fff;background:darkred;">
+                  搞笑短视频
+              </div>
+              <div class="col-md-9 hot-fun-ifo" style="background-color:#2F3238">
+                  <ul>
+                      <li>
+                          <a href="" title="追击者"><img src="img/zhuijizhe.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title=""><img src="img/sharenhuiyi.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title="追击者"><img src="img/juemigenzhong.png" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title="追击者"><img src="img/yuzhoukuaidi.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title="追击者"><img src="img/bianhuren.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title="追击者"><img src="img/deathNote.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title="追击者"><img src="img/newworld.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                      <li>
+                          <a href="" title="追击者"><img src="img/guanwu.jpg" alt="追击者"></a>
+                          <div class="user-ifo">
+                              <div class="useri"><a href=""><img src="img/por1.png" alt=""></a></div>
+                              <a href="" class="t">小小南木</a>
+                          </div>
+
+                          <span class="text">
+                             <a href="" title="追击者"><strong>唐豆豆修活人墓惨被活埋</strong></a>
+                          </span>
+                      </li>
+                  </ul>
+              </div>
+              <div class="col-md-3 hot-movie-sort">222222</div>
+          </div>
+          <div class="player">
+              <video src="http://pan.baidu.com/s/1kV0ROd5" controls></video>
+          </div>
+      </div>
+
+  <script>
+      var a=1,b=1;
+      var num =0;
+
+      $(function () {
+          $(".ifo").html($(".aimg-1").find("img").attr("alt"));
+          var index=$(".pic a").length;
+          $(".auto-pre").click(function(){
+              b+=1;
+              if(b>index)b=1;
+              if(a>index)a=1;
+              $(".aimg-"+a).hide();
+              $(".aimg-"+b).show();
+              $(".auto-img ul li").eq(a-1).removeClass("on");
+              $(".auto-img ul li").eq(b-1).addClass("on");
+              $(".ifo").html($(".aimg-"+b).find("img").attr("alt"));
+              a+=1;
+          });
+          $(".auto-next").click(function(){
+              b-=1;
+              if(b<1)b=index;
+              if(a<1)a=index;
+              $(".aimg-"+a).hide();
+              $(".aimg-"+b).show();
+              $(".auto-img ul li").eq(a-1).removeClass("on");
+              $(".auto-img ul li").eq(b-1).addClass("on");
+              $(".ifo").html($(".aimg-"+b).find("img").attr("alt"));
+              a-=1;
+          });
+          var time=0;
+         time=setInterval(function(){
+             b+=1;
+             if(b>index)b=1;
+             if(a>index)a=1;
+             $(".aimg-"+a).fadeOut();
+             $(".aimg-"+b).fadeIn();
+             $(".auto-img ul li").eq(a-1).removeClass("on");
+             $(".auto-img ul li").eq(b-1).addClass("on");
+             $(".ifo").html($(".aimg-"+b).find("img").attr("alt"));
+             a+=1;
+         },2000);
+
+          $(".auto-img ul li").click(function(){
+              num = $(".auto-img ul li").index(this)+1;
+              $(".aimg-"+a).hide();
+              $(".aimg-"+num).show();
+              $(".auto-img ul li").eq(a-1).removeClass("on");
+              $(".auto-img ul li").eq(num-1).addClass("on");
+              $(".ifo").html($(".aimg-"+num).find("img").attr("alt"));
+              a=b=num;
+          });
+
+          $(".auto-play").mouseover(function () {
+              clearInterval(time);
+          });
+          $(".auto-play").mouseout(function(){
+              time=setInterval(function () {
+                  b+=1;
+                  if(b>index)b=1;
+                  if(a>index)a=1;
+                  $(".aimg-"+a).hide();
+                  $(".aimg-"+b).show();
+                  $(".auto-img ul li").eq(a-1).removeClass("on");
+                  $(".auto-img ul li").eq(b-1).addClass("on");
+                  $(".ifo").html($(".aimg-"+b).find("img").attr("alt"));
+                  a+=1;
+              },2000);
+          });
+
+      });
+      function playl(){
+
+          b+=1;
+          if(b>index)b=1;
+          if(a>index)a=1;
+          $(".aimg-"+a).hide();
+          $(".aimg-"+b).show();
+          $(".auto-img ul li").eq(a-1).removeClass("on");
+          $(".auto-img ul li").eq(b-1).addClass("on");
+          $(".ifo").html($(".aimg-"+b).find("img").attr("alt"));
+          a+=1;
+          alert("bbbb");
+      }
+
+  </script>
+</body>
+</html>
